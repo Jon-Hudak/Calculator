@@ -39,4 +39,9 @@ button {
 #btnCont{
   border-radius: 0;
 }
+#display, #answer{
+  text-align: right;
+  font-family: 'Digital';
+  background-color: black;
+}
 
