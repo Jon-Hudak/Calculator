@@ -30,16 +30,15 @@ export default function NumPad({ display, setDisplay, setAnswer }) {
       case "x":
       case "-":
       case "+":
-        if (display != "0" && display!='-') {
-          if (!display.match(/.+[\/\+\-\x]$/)) {
+        if (display !== "0" && display !== "-") {
+          if (!display.match(/.+[/+\-x]$/)) {
             setDisplay(display + btnPressed);
           }
-          if (display.match(/.*[\/\+\-\x]$/)) {
-            setDisplay(display.replaceAll(/[\/\+\-x]$/g, btnPressed));
+          if (display.match(/.*[/+\-x]$/)) {
+            setDisplay(display.replaceAll(/[/+-x]$/g, btnPressed));
           }
-        }
-        else {
-          setDisplay('-');
+        } else {
+          setDisplay("-");
         }
         break;
 
