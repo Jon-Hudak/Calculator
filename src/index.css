@@ -38,7 +38,7 @@ body {
 
 button {
 }
-#equal {
+#equals {
   height:200%;
 }
 
@@ -46,10 +46,12 @@ button {
 .btn{
   border-color: black;
   height: 80px;
+  font-size: 30px;
   
 }
 #btnCont{
   border-radius: 0;
+  
 }
 #display, #answer{
   text-align: right;
