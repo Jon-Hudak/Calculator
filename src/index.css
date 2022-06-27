@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: darkgrey;
 }
 
 code {
@@ -14,25 +15,28 @@ code {
 .App {
   display: flex;
   justify-content: center;
-
   height: 100vh;
-  display: flex;
   align-items: center;
-  justify-content: center;
 }
 #calculator {
-  height: 350px;
-  width: 250px;
-  border: solid;
-  border-color: red;
-  display: flex;
+  border: solid 2px;
+  border-color: black;
+  padding:0 15px;
+  width:210px;
 }
 
 button {
-  flex: auto;
-  width: 100%;
+}
+#equal {
+  height:200%;
+}
 
+
+.btn{
+  border-color: black;
+  
 }
-#AC {
-  background-color: red;
+#btnCont{
+  border-radius: 0;
 }
+
