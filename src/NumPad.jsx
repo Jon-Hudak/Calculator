@@ -1,9 +1,38 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Col, Button } from "react-bootstrap";
 
 export default function NumPad({ display, setDisplay, setAnswer }) {
   const checkLeadingZero = (input) => {
     return input.replaceAll(/^0+(?!$)/g, "");
+  };
+
+  const equals = (input) => {
+    while (/[x/]/.test(input)) {//checks if multiplication or division first
+     // const match = input.match(/(-?\d(?:.\d+)?)+([/x])([0-9](?:.\d+)?)/);
+      let match = input.match(/([0-9]+)([x/])([0-9]+)/);
+      console.log(match);
+      let [exp, num1, operator, num2] = match;
+      let answer = 0;
+      switch (operator) {
+        case "x":
+          console.log('no');
+          answer = parseInt(num1) * parseInt(num2);
+          input = input.replace(exp, answer.toString());
+          console.log(input);
+          setDisplay(display+"="+answer);
+          setAnswer(answer);
+          break;
+        case "/":
+          if (num2 == 0) {
+            setAnswer("Negative Infinity");
+          }
+          answer = num1 / num2;
+          break;
+      }
+    }
+    //  if (true)){
+
+    //  }
   };
 
   const clickHandler = (e) => {
@@ -17,6 +46,7 @@ export default function NumPad({ display, setDisplay, setAnswer }) {
 
       case "=":
         console.log("TODO Equals");
+        equals(display);
         break;
 
       case ".":
