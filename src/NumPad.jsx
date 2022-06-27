@@ -1,5 +1,9 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+  const checkLeadingZero=(input)=>{
+    return input.replaceAll(/^0+(?!$)/g,'')
+     
+  }
 
 export default function NumPad() {
   return (
