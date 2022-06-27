@@ -21,10 +21,7 @@ body {
 
 
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
-}
+
 .App {
   display: flex;
   justify-content: center;
@@ -35,7 +32,8 @@ code {
   border: solid 2px;
   border-color: black;
   padding:0 15px;
-  width:210px;
+  width:330px;
+  
 }
 
 button {
@@ -47,6 +45,7 @@ button {
 
 .btn{
   border-color: black;
+  height: 80px;
   
 }
 #btnCont{
@@ -56,5 +55,6 @@ button {
   text-align: right;
   font-family: 'Digital';
   background-color: black;
+  font-size: 30px;
 }
 
