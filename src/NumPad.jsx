@@ -25,10 +25,19 @@ export default function NumPad({ display, setDisplay, setAnswer }) {
         case "/":
           if (num2 == 0) {
             setAnswer("Negative Infinity");
+            break;
           }
-          answer = num1 / num2;
+          console.log('div');
+          answer = parseInt(num1) / parseInt(num2);
+          input = input.replace(exp, answer.toString());
+          console.log(input);
+          setDisplay(display+"="+answer);
+          setAnswer(answer);
           break;
-      }
+      
+        default:
+          throw new Error;
+        }
     }
     //  if (true)){
 
