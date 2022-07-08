@@ -1,43 +1,53 @@
 import React from "react";
+import { useState } from "react";
 import { Col, Button } from "react-bootstrap";
 
-export default function NumPad({ display, setDisplay, setAnswer }) {
+export default function NumPad({ display, answer, setDisplay, setAnswer }) {
+  const [equalsLastPressed, setEqualsLastPressed] = useState(false);
+
   const checkLeadingZero = (input) => {
     return input.replaceAll(/^0+(?!$)/g, "");
   };
 
   const equals = (input) => {
-    while (/[x/]/.test(input)) {//checks if multiplication or division first
-     // const match = input.match(/(-?\d(?:.\d+)?)+([/x])([0-9](?:.\d+)?)/);
+    let newAns = 0;
+    let newDisp=input;
+    let breakout=false;
+    while (/[x/]/.test(input) && breakout==false) {
+      //checks if multiplication or division first
+      // const match = input.match(/(-?\d(?:.\d+)?)+([/x])([0-9](?:.\d+)?)/);
       let match = input.match(/([0-9]+)([x/])([0-9]+)/);
       console.log(match);
       let [exp, num1, operator, num2] = match;
-      let answer = 0;
+
       switch (operator) {
         case "x":
-          console.log('no');
-          answer = parseInt(num1) * parseInt(num2);
-          input = input.replace(exp, answer.toString());
+          console.log("no");
+          newAns = parseInt(num1) * parseInt(num2);
+          input = input.replace(exp, newAns.toString());
           console.log(input);
-          setDisplay(display+"="+answer);
-          setAnswer(answer);
+          
           break;
         case "/":
           if (num2 == 0) {
-            setAnswer("Negative Infinity");
+            console.log('div zero')
+            newAns="Negative Infinity";
+            newDisp="";
+            breakout=true;
             break;
           }
-          console.log('div');
-          answer = parseInt(num1) / parseInt(num2);
-          input = input.replace(exp, answer.toString());
-          console.log(input);
-          setDisplay(display+"="+answer);
-          setAnswer(answer);
+          console.log("div");
+          newAns = parseInt(num1) / parseInt(num2);
+          input = input.replace(exp, newAns.toString());
+          console.log(input);          
           break;
-      
+
         default:
-          throw new Error;
-        }
+          throw new Error();
+      }
+
+      setDisplay(newDisp + "=" + newAns);
+      setAnswer(newAns);
     }
     //  if (true)){
 
@@ -51,15 +61,19 @@ export default function NumPad({ display, setDisplay, setAnswer }) {
       case "AC":
         setDisplay("0");
         setAnswer("0");
+        setEqualsLastPressed(false);
         break;
 
       case "=":
-        console.log("TODO Equals");
-        equals(display);
+        if (equalsLastPressed == false) {
+          console.log("TODO Equals");
+          equals(display);
+        }
+        setEqualsLastPressed(true);
         break;
 
       case ".":
-        if (!display.match(/\./)) {
+        if (!display.match(/\./) && equalsLastPressed === false) {
           //check if decimal already exists
           setDisplay(display + ".");
         }
@@ -69,6 +83,9 @@ export default function NumPad({ display, setDisplay, setAnswer }) {
       case "x":
       case "-":
       case "+":
+        if (equalsLastPressed === true) {
+          setDisplay(answer);
+        }
         if (display !== "0" && display !== "-") {
           if (!display.match(/.+[/+\-x]$/)) {
             setDisplay(display + btnPressed);
@@ -79,13 +96,19 @@ export default function NumPad({ display, setDisplay, setAnswer }) {
         } else {
           setDisplay("-");
         }
+        setEqualsLastPressed(false);
         break;
 
       default:
         //assuming all other cases are accounted for, must be a number
-        if (display.length < 15) {
-          setDisplay(checkLeadingZero(display + btnPressed));
+
+        if (equalsLastPressed) {
+          setDisplay("");
         }
+
+        setDisplay((old) => checkLeadingZero(old + btnPressed));
+
+        setEqualsLastPressed(false);
         break;
     }
   };

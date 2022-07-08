@@ -16,7 +16,7 @@ function App() {
             <Display display={display} answer={answer}/>
           </Row>
           <Row>
-            <NumPad display={display} setDisplay={setDisplay} setAnswer={setAnswer}/>
+            <NumPad display={display} answer={answer} setDisplay={setDisplay} setAnswer={setAnswer}/>
           </Row>
         </Container>
       
