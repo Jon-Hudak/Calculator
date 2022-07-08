@@ -129,11 +129,11 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
       default:
         //assuming all other cases are accounted for, must be a number
 
-        if (equalsLastPressed) {
+        if (equalsLP) {
           newDisp = "";
         }
 
-        newDisp = checkLeadingZero(display + btnPressed);
+        newDisp = checkLeadingZero(newDisp + btnPressed);
 
         equalsLP = false;
         break;
