@@ -53,8 +53,8 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
 
   const clickHandler = (e) => {
     let btnPressed = e.target.innerText;
-    let newDisp=0;
-    let newAns=0;
+    let newDisp=display;
+    let newAns=answer;
     let equalsLP=equalsLastPressed;
 
     switch (btnPressed) {
