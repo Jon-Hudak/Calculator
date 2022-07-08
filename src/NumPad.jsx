@@ -32,7 +32,6 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
           if (num2 == 0) {
             console.log('div zero')
             newAns="Negative Infinity";
-            newDisp="";
             breakout=true;
             break;
           }
@@ -45,9 +44,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
         default:
           throw new Error();
       }
-
-      setDisplay(newDisp + "=" + newAns);
-      setAnswer(newAns);
+      return newAns;
     }
     //  if (true)){
 
@@ -56,26 +53,30 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
 
   const clickHandler = (e) => {
     let btnPressed = e.target.innerText;
+    let newDisp=0;
+    let newAns=0;
+    let equalsLP=equalsLastPressed;
 
     switch (btnPressed) {
       case "AC":
-        setDisplay("0");
-        setAnswer("0");
-        setEqualsLastPressed(false);
+        newDisp="0";
+        newAns="0";
+        equalsLP=false;
         break;
 
       case "=":
         if (equalsLastPressed == false) {
           console.log("TODO Equals");
-          equals(display);
+          newAns=equals(display);
+          newDisp=`${display}=${newAns}`
         }
-        setEqualsLastPressed(true);
+        equalsLP=true;
         break;
 
       case ".":
         if (!display.match(/\./) && equalsLastPressed === false) {
           //check if decimal already exists
-          setDisplay(display + ".");
+          newDisp = display + ".";
         }
         break;
 
@@ -84,33 +85,39 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
       case "-":
       case "+":
         if (equalsLastPressed === true) {
-          setDisplay(answer);
+          newDisp='';
         }
         if (display !== "0" && display !== "-") {
           if (!display.match(/.+[/+\-x]$/)) {
-            setDisplay(display + btnPressed);
+            newDisp=display + btnPressed;
           }
           if (display.match(/.*[/+\-x]$/)) {
-            setDisplay(display.replaceAll(/[/+-x]$/g, btnPressed));
+            newDisp=display.replaceAll(/[/+-x]$/g, btnPressed);
           }
         } else {
-          setDisplay("-");
+          newDisp="-";
         }
-        setEqualsLastPressed(false);
+        equalsLP=false;
         break;
 
       default:
         //assuming all other cases are accounted for, must be a number
 
         if (equalsLastPressed) {
-          setDisplay("");
+         newDisp="";
         }
 
-        setDisplay((old) => checkLeadingZero(old + btnPressed));
+        newDisp=checkLeadingZero(display + btnPressed);
 
-        setEqualsLastPressed(false);
+        equalsLP=false;
         break;
     }
+    setDisplay(newDisp);
+    setAnswer(newAns);
+    setEqualsLastPressed(equalsLP);
+
+
+
   };
 
   return (
