@@ -44,6 +44,36 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
         default:
           throw new Error();
       }
+    }
+
+
+      while (/[+-]/.test(input) && breakout==false) {
+        //checks if multiplication or division first
+        // const match = input.match(/(-?\d(?:.\d+)?)+([/x])([0-9](?:.\d+)?)/);
+        let match = input.match(/([0-9]+)([+-])([0-9]+)/);
+        console.log(match);
+        let [exp, num1, operator, num2] = match;
+  
+        switch (operator) {
+          case "+":
+            console.log("no");
+            newAns = parseInt(num1) + parseInt(num2);
+            input = input.replace(exp, newAns.toString());
+            console.log(input);
+            
+            break;
+          case "-":
+            console.log("div");
+            newAns = parseInt(num1) - parseInt(num2);
+            input = input.replace(exp, newAns.toString());
+            console.log(input);          
+            break;
+  
+          default:
+            throw new Error();
+        }
+
+
       return newAns;
     }
     //  if (true)){
