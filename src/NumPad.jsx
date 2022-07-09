@@ -13,19 +13,19 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
     let newAns = 0;
     let newDisp = input;
     let breakout = false;
-    while (/[x/]/.test(input) && breakout == false) {
+    while (/[\dx/]/.test(input) && breakout == false) {
       //checks if multiplication or division first
-      // const match = input.match(/(-?\d(?:.\d+)?)+([/x])([0-9](?:.\d+)?)/);
-      let match = input.match(/([0-9]+)([x/])([0-9]+)/);
+      let match = input.match(/([-]?[0-9]+(?:[.][0-9]+)?)([x\/])([0-9]+(?:[.][0-9]+)?)/);
+      //let match = input.match(/([0-9]+)([x/])([0-9]+)/);
       console.log(match);
       let [exp, num1, operator, num2] = match;
 
       switch (operator) {
         case "x":
-          console.log("no");
+          console.log("mult");
           newAns = parseInt(num1) * parseInt(num2);
           input = input.replace(exp, newAns.toString());
-          console.log(input);
+          console.log(input,"input");
 
           break;
         case "/":
@@ -45,12 +45,12 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
           throw new Error();
       }
     }
-    console.log(newAns);
+    console.log(newAns,"after");
     breakout = false;
-    while (/[+-]/.test(input) && breakout == false) {
+    while (/\d[+-]/.test(input) && breakout == false) {
       //checks if multiplication or division first
-      // const match = input.match(/(-?\d(?:.\d+)?)+([/x])([0-9](?:.\d+)?)/);
-      let match = input.match(/([0-9]+)([+-])([0-9]+)/);
+      let match = input.match(/([-]?[0-9]+(?:[.][0-9]+)?)([-+])([0-9]+(?:[.][0-9]+)?)/);
+      //let match = input.match(/([0-9]+)([+-])([0-9]+)/);
       console.log(match);
       let [exp, num1, operator, num2] = match;
 
@@ -64,7 +64,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
           break;
         case "-":
           console.log("div");
-          newAns = parseInt(num1) - parseInt(num2);
+          newAns = parseFloat(num1) - parseFloat(num2);
           input = input.replace(exp, newAns.toString());
           console.log(input);
           break;
