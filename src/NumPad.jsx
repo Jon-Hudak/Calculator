@@ -13,10 +13,10 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
     let newAns = 0;
     let newDisp = input;
     let breakout = false;
-    while (/[\dx/]/.test(input) && breakout == false) {
+    while (/\d[x/]/.test(input) && breakout == false) {
       //checks if multiplication or division first
       let match = input.match(
-        /([-]?[0-9]+(?:[.][0-9]+)?)([x\/])([0-9]+(?:[.][0-9]+)?)/
+        /([-]?[0-9]+(?:[.][0-9]+)?)([x\/])([-]?[0-9]+(?:[.][0-9]+)?)/
       );
       //let match = input.match(/([0-9]+)([x/])([0-9]+)/);
       console.log(match);
@@ -48,9 +48,9 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
       }
     }
     console.log(newAns, "after");
-    breakout = false;
-    while (/\d[+-]/.test(input) && breakout == false) {
-      //checks if multiplication or division first
+    
+    while (/\d[+-]/.test(input) ) {
+      //checks if add or subtract
       let match = input.match(
         /([-]?[0-9]+(?:[.][0-9]+)?)([-+])([-]?[0-9]+(?:[.][0-9]+)?)/
       );
