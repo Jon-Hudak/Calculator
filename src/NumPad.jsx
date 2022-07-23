@@ -15,7 +15,9 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
     let breakout = false;
     while (/[\dx/]/.test(input) && breakout == false) {
       //checks if multiplication or division first
-      let match = input.match(/([-]?[0-9]+(?:[.][0-9]+)?)([x\/])([0-9]+(?:[.][0-9]+)?)/);
+      let match = input.match(
+        /([-]?[0-9]+(?:[.][0-9]+)?)([x\/])([0-9]+(?:[.][0-9]+)?)/
+      );
       //let match = input.match(/([0-9]+)([x/])([0-9]+)/);
       console.log(match);
       let [exp, num1, operator, num2] = match;
@@ -25,7 +27,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
           console.log("mult");
           newAns = parseInt(num1) * parseInt(num2);
           input = input.replace(exp, newAns.toString());
-          console.log(input,"input");
+          console.log(input, "input");
 
           break;
         case "/":
@@ -45,11 +47,13 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
           throw new Error();
       }
     }
-    console.log(newAns,"after");
+    console.log(newAns, "after");
     breakout = false;
     while (/\d[+-]/.test(input) && breakout == false) {
       //checks if multiplication or division first
-      let match = input.match(/([-]?[0-9]+(?:[.][0-9]+)?)([-+])([0-9]+(?:[.][0-9]+)?)/);
+      let match = input.match(
+        /([-]?[0-9]+(?:[.][0-9]+)?)([-+])([-]?[0-9]+(?:[.][0-9]+)?)/
+      );
       //let match = input.match(/([0-9]+)([+-])([0-9]+)/);
       console.log(match);
       let [exp, num1, operator, num2] = match;
@@ -74,7 +78,6 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
       }
     }
     return newAns;
-
   };
 
   const clickHandler = (e) => {
@@ -108,24 +111,42 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
 
       case "/":
       case "x":
-      case "-":
       case "+":
         if (equalsLastPressed === true) {
           newDisp = "";
         }
-        if (display !== "0" && display !== "-") {
-          if (!display.match(/.+[/+\-x]$/)) {
+        if (display != "0") {
+          if (!display.match(/.+[/+\x]$/)) {
             newDisp = display + btnPressed;
           }
-          if (display.match(/.*[/+\-x]$/)) {
+          if (display.match(/.*[/+\x]$/)) {
             newDisp = display.replaceAll(/[/+-x]$/g, btnPressed);
           }
-        } else {
-          newDisp = "-";
-        }
+        } 
+        // else {
+        //   newDisp = "-";
+        // }
         equalsLP = false;
         break;
-
+        case "-":
+          if (newDisp.charAt(newDisp.length - 1) == "-") {
+            console.log(newDisp)
+            newDisp=newDisp.slice(0, -1);
+            console.log(newDisp);
+            break
+          }    
+          if (display != "0") {
+            if (!display.match(/.+[-]$/)) {
+              newDisp = display + btnPressed;
+            }
+            if (display.match(/.*[-]$/)) {
+              newDisp = display.replaceAll(/[/+-x]$/g, btnPressed);
+            }
+          } 
+          if (display=="0"){
+            newDisp='-'
+          }
+          break;
       default:
         //assuming all other cases are accounted for, must be a number
 
