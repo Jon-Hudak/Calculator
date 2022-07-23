@@ -25,7 +25,9 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
       switch (operator) {
         case "x":
           console.log("mult");
-          newAns = parseInt(num1) * parseInt(num2);
+          exp=exp.replace('x','*');
+          newAns= Math.round(1000000000000 * eval(exp)) / 1000000000000;
+          exp=exp.replace('*','x');
           input = input.replace(exp, newAns.toString());
           console.log(input, "input");
 
@@ -38,7 +40,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
             break;
           }
           console.log("div");
-          newAns = parseInt(num1) / parseInt(num2);
+          newAns= Math.round(1000000000000 * eval(exp)) / 1000000000000;
           input = input.replace(exp, newAns.toString());
           console.log(input);
           break;
@@ -61,14 +63,15 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
       switch (operator) {
         case "+":
           console.log("no");
-          newAns = parseInt(num1) + parseInt(num2);
+          //newAns = (num1) + (num2);
+          newAns= Math.round(1000000000000 * eval(exp)) / 1000000000000;
           input = input.replace(exp, newAns.toString());
           console.log(input);
 
           break;
         case "-":
           console.log("div");
-          newAns = parseFloat(num1) - parseFloat(num2);
+          newAns= Math.round(1000000000000 * eval(exp)) / 1000000000000;
           input = input.replace(exp, newAns.toString());
           console.log(input);
           break;
@@ -103,7 +106,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
         break;
 
       case ".":
-        if (!display.match(/\./) && equalsLastPressed === false) {
+        if (display.match(/(^\d+?\d*)|([x/+-]\d)/) && equalsLastPressed === false) {
           //check if decimal already exists
           newDisp = display + ".";
         }
