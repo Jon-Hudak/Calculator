@@ -124,7 +124,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
           newDisp = "";
         }
         if (display != "0") {
-          if (!display.match(/.+[/+\x]$/)) {
+          if (!display.match(/.+[/+-\x]$/)) {
             newDisp = display + btnPressed;
           }
           if (display.match(/.*[/+\x]$/)) {
