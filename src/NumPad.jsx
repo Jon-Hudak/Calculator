@@ -103,12 +103,15 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
           console.log("TODO Equals");
           newAns = equals(display);
           newDisp = `${display}=${newAns}`;
+          if (newDisp.length>22){
+            newDisp=newDisp.replace(/.*=/,'')
+          }
         }
         equalsLP = true;
         break;
 
       case ".":
-        if (display.match(/(^\d+?\d*)|([x/+-]\d)/) && equalsLastPressed === false) {
+        if (!(/\d+[.]\d*$/).test(display)) {
           //check if decimal already exists
           newDisp = display + ".";
         }
