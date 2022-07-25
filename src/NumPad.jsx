@@ -14,7 +14,8 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
     let newDisp = input;
     let breakout = false;
     let match =''
-    while (/\d[x/]/.test(input) && breakout == false) {
+    
+    while (/\d+[x/]-?\d+/.test(input) && breakout == false) {
       //checks if multiplication or division first
        match = input.match(
         /([-]?[0-9]+(?:[.][0-9]+)?)([x\/])([-]?[0-9]+(?:[.][0-9]+)?)/
@@ -52,7 +53,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
     }
     console.log(newAns, "after");
     
-    while (/\d[+-]/.test(input) ) {
+    while (/\d[+-]-?\d/.test(input) ) {
       //checks if add or subtract
       match = input.match(
         /([-]?[0-9]+(?:[.][0-9]+)?)([-+])([-]?[0-9]+(?:[.][0-9]+)?)/
@@ -99,15 +100,18 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
         break;
 
       case "=":
-        if (equalsLastPressed === false) {
+        if (equalsLastPressed === false && !newDisp.match(/\d+[x+-/]$/)){
+          
+         
           console.log("TODO Equals");
           newAns = equals(display);
           newDisp = `${display}=${newAns}`;
           if (newDisp.length>22){
             newDisp=newDisp.replace(/.*=/,'')
           }
-        }
+        
         equalsLP = true;
+      }
         break;
 
       case ".":
@@ -124,10 +128,12 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
           newDisp = "";
         }
         if (display != "0") {
-          if (!display.match(/.+[/+-\x]$/)) {
-            newDisp = display + btnPressed;
+          console.log(display,newDisp);
+          if (!newDisp.match(/[x+-/]$/)) {
+            newDisp = newDisp + btnPressed;
+            console.log('yo',newDisp)
           }
-          if (display.match(/.*[/+\x]$/)) {
+          if (display.match(/\d+[x/+-]$/)) {
             newDisp = display.replaceAll(/[/+-x]$/g, btnPressed);
           }
         } 
