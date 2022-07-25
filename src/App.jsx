@@ -10,12 +10,12 @@ function App() {
   return (
     <div className="App">
       
-        <Container id="calculator" className="">
+        <Container fluid id="calculator" className="">
 
           <Row>
             <Display display={display} answer={answer}/>
           </Row>
-          <Row>
+          <Row id="btnCont">
             <NumPad display={display} answer={answer} setDisplay={setDisplay} setAnswer={setAnswer}/>
           </Row>
         </Container>
