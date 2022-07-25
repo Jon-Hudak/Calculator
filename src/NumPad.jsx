@@ -90,7 +90,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
     let newDisp = display;
     let newAns = answer;
     let equalsLP = equalsLastPressed;
-    let match=''
+    
 
     switch (btnPressed) {
       case "AC":
@@ -125,7 +125,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
       case "x":
       case "+":
         if (equalsLastPressed === true) {
-          newDisp = "";
+          newDisp = newDisp+btnPressed;
         }
         if (display != "0") {
           console.log(display,newDisp);
@@ -137,9 +137,6 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
             newDisp = display.replaceAll(/[/+-x]$/g, btnPressed);
           }
         } 
-        // else {
-        //   newDisp = "-";
-        // }
         equalsLP = false;
         break;
         case "-":
@@ -160,6 +157,7 @@ export default function NumPad({ display, answer, setDisplay, setAnswer }) {
           if (display=="0"){
             newDisp='-'
           }
+          equalsLP = false;
           break;
       default:
         //assuming all other cases are accounted for, must be a number
